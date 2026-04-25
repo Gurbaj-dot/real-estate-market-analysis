@@ -1,1 +1,79 @@
+/*
+=========================================================================================================
+DDL Script: create real estate tables
+=========================================================================================================
+script purpose:
+this script creates tables in new real estate database, dropping existing tables 
+if they already exist.
+Run this script to re-define the DDL structure of 'bronze' tables 
+=========================================================================================================
+*/
+if object_id ('properties', 'u') is not null
+drop table properties;
+GO
 
+create table properties (
+  id int,
+  address varchar(30),
+  neighborhood_id int,
+  property_type text,
+  bedrooms int,
+  bathrooms varchar(5),
+  sqft int,
+  list_price int, 
+  list_date date
+);
+GO
+
+if object_id('agents','u') is not null
+  drop table agents;
+GO
+
+create table agents (
+  agent_id  int,
+  name text ,
+  experience_years int,
+  specialization text,
+  commission_rate float
+);
+GO
+
+if object_id('neighborhoods','u') is not null
+  drop table neighborhoods;
+GO
+
+create table neighborhoods(
+  neighborhood_id int,
+  name text,
+  city text,
+  avg_income int,
+  school_rating float,
+  walkability_score int 
+);
+GO
+
+if object_id('inspections','u') is not null
+  drop table inspections;
+GO
+
+create table inspections(
+  inspection_id int,
+  property_id int,
+  inspection_date date,
+  issues_found int,
+  severity_level text
+);
+GO
+
+if object_id('sales','u') is not null
+  drop table sales;
+GO
+
+create table sales ( 
+  sale_id int,
+  property_id int,
+  agent_id int,
+  sale_price int,
+  sale_date date,
+  days_on_market int
+);
