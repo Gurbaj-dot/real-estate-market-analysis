@@ -1,0 +1,125 @@
+/*
+==========================================================================================================
+Stored Procedure: real estate market analysis
+==========================================================================================================
+script purpose:
+this store procedure loads data from external CSV files.
+it performs the following actions:
+- truncates the bronze tables before loading data.
+- uses the 'bulk insert' command to load data from csv files to all tables.
+
+parameters:
+none.
+this stored procedure does not accept any parameters or return any values.
+
+usage example:
+Exec  real_estate_market_analysis;
+============================================================================================================
+*/
+
+create or alter procedure real_estate_market_analysis as 
+
+begin 
+declare @start_time datetime, @end_time datetime;
+begin try 
+print '----------------------------------------------------------------------------------------------------';
+print 'real estate market analysis';
+print '----------------------------------------------------------------------------------------------------';
+
+set @start_time = getdate();
+print '>> truncating table: properties'
+truncate table properties ;
+print '>> inserting data into: properties'
+bulk insert properties 
+from 'C:\Users\gurba\OneDrive\Desktop\sql daata\sql sandbox\properties real estate.csv'
+with ( 
+	firstrow = 2,
+	fieldterminator = ',',
+	rowterminator = '0x0a',
+	tablock);
+set @end_time = getdate();
+
+print '>> load duration:' + cast(datediff(second, @start_time, @end_time) as nvarchar) + 'seconds';
+print '>> --------------------------'
+
+set @start_time = getdate();
+print '>> truncating table:sales'
+truncate table sales;
+print '>> inserting data into:sales'
+bulk insert sales 
+from 'C:\Users\gurba\OneDrive\Desktop\sql daata\sql sandbox\sales real estate.csv'
+with (
+	firstrow = 2,
+	fieldterminator = ',',
+	rowterminator = '0x0a',
+	tablock )
+set @end_time = getdate();
+
+ 
+print '>> load duration: ' + cast(datediff(second, @start_time, @end_time) as nvarchar) + 'seconds';
+print '>> -------------------------';
+
+
+set @start_time = getdate();
+print '>> truncating table:agents'
+truncate table agents;
+print '>> inserting data into:agents'
+bulk insert agents 
+from 'C:\Users\gurba\OneDrive\Desktop\sql daata\sql sandbox\agents real estate.csv'
+with (
+	firstrow = 2,
+	fieldterminator = ',',
+	rowterminator = '0x0a',
+	tablock );
+set @end_time = getdate();
+
+ 
+print '>> load duration: ' + cast(datediff(second, @start_time, @end_time) as nvarchar) + 'seconds';
+print '>> -------------------------';
+
+
+set @start_time = getdate();
+print '>> truncating table:neighborhoods'
+truncate table neighborhoods;
+print '>> inserting data into:neighborhoods'
+bulk insert neighborhoods
+from 'C:\Users\gurba\OneDrive\Desktop\sql daata\sql sandbox\neighborhoods real estate.csv'
+with ( 
+	firstrow = 2,
+	fieldterminator = ',',
+	rowterminator = '0x0a',
+	tablock);
+set @end_time = getdate();
+
+ 
+print '>> load duration: ' + cast(datediff(second, @start_time, @end_time) as nvarchar) + 'seconds';
+print '>> -------------------------';
+
+
+set @start_time = getdate();
+print '>> truncating table:inspections'
+truncate table inspections;
+print '>> inserting data into:inspections' 
+bulk insert inspections 
+from 'C:\Users\gurba\OneDrive\Desktop\sql daata\sql sandbox\inspections real estate.csv'
+with (
+	firstrow = 2,
+	fieldterminator = ',',
+	rowterminator = '0x0a',
+	tablock)
+set @end_time = getdate();
+
+print '>> load duration: ' + cast(datediff(second, @start_time, @end_time) as nvarchar) + 'seconds';
+print '>> -------------------------';
+
+
+end try
+begin catch
+PRINT '============================================================================================================='
+PRINT 'error occured during loading real estate market analysis';
+print 'error message' + error_message();
+print 'error message' + cast (error_number() as nvarchar);
+print 'error message' + cast (error_state() as nvarchar);
+PRINT '============================================================================================================='
+end catch
+end
