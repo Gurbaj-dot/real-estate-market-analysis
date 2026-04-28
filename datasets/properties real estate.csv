@@ -1,0 +1,11 @@
+﻿id,address,neighborhood_id,property_type,bedrooms,bathrooms,sqft,list_price,list_date
+1,123 Main St,1,Condo,2,2,1200,450000,6/15/2023
+2,456 Oak Ave,2,House,3,2.5,1800,525000,7/1/2023
+3,789 Hill Dr,3,House,4,3.5,3200,950000,8/10/2023
+4,321 Elm St,4,House,3,2,1650,485000,9/5/2023
+5,654 Lake Blvd,5,Townhouse,3,2.5,1950,625000,10/12/2023
+6,987 Park Ln,1,Condo,1,1,850,325000,11/20/2023
+7,147 River Rd,2,House,4,3,2400,675000,12/1/2023
+8,258 Summit Ave,3,House,5,4,4100,1250000,1/5/2024
+9,369 Maple Dr,4,House,3,2.5,1750,510000,1/15/2024
+10,741 Sunset Blvd,5,Condo,2,2,1350,475000,1/22/2024
