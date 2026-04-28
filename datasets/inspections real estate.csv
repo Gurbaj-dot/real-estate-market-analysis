@@ -1,0 +1,7 @@
+id,property_id,inspection_date,issues_found,severity_level
+1,1,7/10/2023,2,Minor
+2,2,7/25/2023,5,Moderate
+3,3,8/28/2023,1,Minor
+4,4,9/22/2023,3,Minor
+5,5,10/30/2023,4,Moderate
+6,7,12/18/2023,7,Major
