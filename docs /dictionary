@@ -1,1 +1,20 @@
+docs/01_data_dictionary.md 
 
+Purpose: Defines every table and column in the  real_estate  database.
+
+Data Dictionary
+
+Table
+  
+Table ------------------------------Column -------------------------- Data --------------------------------- Type  Description
+properties -------------------------- id ------------------------------INT (PK) -----------------------Unique identifier for each property listing.
+ -----------------------------------neighborhood_id  ------------------INT (FK) ----------------------Reference to the neighborhoods table.
+ ------------------------------------list_price --------------------- DECIMAL -------------------------The initial asking price of the property.
+sales-------------------------------  property_id--------------------  INT (FK) -----------------------Link to the specific property sold.
+------------------------------------ sale_price----------------------  DECIMAL ------------------------The final agreed transaction price.
+ ------------------------------------days_on_market ------------------- INT--------------------------- Duration from listing to sale date.
+--------------------------------------agents  commission_rate  ---------FLOAT ------------------------ The percentage of the sale price earned by the agent.
+neighborhoods  -----------------------school_rating  --------------------INT-------------------------- Quality score (1-10) of local education.
+inspections -------------------------- severity_level ------------------ INT --------------------------Impact score of property issues (1=Low, 10=Critical).
+
+ 
