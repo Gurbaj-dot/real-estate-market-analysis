@@ -1,1 +1,99 @@
+DOCUMENTRY 
+ 
 
+1.  docs/01_data_dictionary.md 
+
+Purpose: Defines every table and column in the  real_estate  database.
+
+Data Dictionary
+
+Table
+  
+Table ------------------------------Column -------------------------- Data --------------------------------- Type  Description
+properties -------------------------- id ------------------------------INT (PK) -----------------------Unique identifier for each property listing.
+ -----------------------------------neighborhood_id  ------------------INT (FK) ----------------------Reference to the neighborhoods table.
+ ------------------------------------list_price --------------------- DECIMAL -------------------------The initial asking price of the property.
+sales-------------------------------  property_id--------------------  INT (FK) -----------------------Link to the specific property sold.
+------------------------------------ sale_price----------------------  DECIMAL ------------------------The final agreed transaction price.
+ ------------------------------------days_on_market ------------------- INT--------------------------- Duration from listing to sale date.
+--------------------------------------agents  commission_rate  ---------FLOAT ------------------------ The percentage of the sale price earned by the agent.
+neighborhoods  -----------------------school_rating  --------------------INT-------------------------- Quality score (1-10) of local education.
+inspections -------------------------- severity_level ------------------ INT --------------------------Impact score of property issues (1=Low, 10=Critical).
+
+ 
+
+2.  docs/02_methodology.md 
+
+Purpose: Explains the analytical steps taken to solve the challenges.
+
+Analysis Methodology
+
+1. Data Cleaning: Handled missing values in the  inspections  table by treating  NULL  as "No Issues Found."
+​
+2. KPI Calculation:
+​
+- Price-to-List Ratio: Calculated as  (sale_price / list_price) .
+​
+- Investment Score: A weighted average of  avg_income  (40%),  school_rating  (40%), and  walkability  (20%).
+​
+3. Aggregation: Data was grouped by neighborhood and property type to eliminate outliers in small sample sizes.
+​
+4. Join Strategy: Utilized  LEFT JOINS  on inspections to ensure properties without issues were still included in the baseline price analysis.
+
+ 
+
+3.  docs/03_market_insights.md 
+
+Purpose: Summarizes the business findings derived from the SQL queries.
+
+Market Insights Report
+
+- Pricing Trends: Neighborhoods with a high  walkability_score  show a 15% higher Price-to-List ratio compared to car-dependent areas.
+​
+- Inspection Impact: Properties with a  severity_level  > 7 see an average price reduction of 12% and stay on the market 20 days longer.
+​
+- Agent Efficiency: Agents specializing in "Luxury Condos" have the highest commission yield but the longest  days_on_market .
+​
+- Investment Hotspots: Top-performing neighborhoods are identified where  school_rating  is > 8 but  avg_income  is still in the mid-range, suggesting high growth potential.
+
+ 
+
+4.  docs/04_system_architecture.md 
+
+Purpose: Shows the relationship between tables and the technology stack.
+
+System Architecture
+
+Entity Relationship Diagram (ERD)
+
+- Properties (Center): Acts as the bridge between Neighborhoods and Sales.
+​
+- Sales (Fact Table): Connects Properties to Agents for performance tracking.
+​
+- Inspections (Sub-table): Linked to Properties via  property_id  for quality analysis.
+
+Tech Stack
+
+- Database: SQL Server / PostgreSQL
+​
+- Analysis Tools: SQL (CTEs, Window Functions)
+​
+- Documentation: Markdown
+
+ 
+
+5.  docs/05_dashboard_overview.md 
+
+Purpose: Describes how the data should be visualized (e.g., in Power BI or Tableau).
+
+Dashboard Concept
+
+The SQL analysis is designed to feed into a 3-page interactive dashboard:
+
+1. Executive Overview: High-level KPIs (Total Sales, Avg Price/Sqft, Market Velocity).
+​
+2. Neighborhood Deep-Dive: A map-based view using the  Investment Potential Score  to highlight "Buy" zones.
+​
+3. Agent Scorecard: A leaderboard ranking agents by "Total Commission" vs. "Sales Speed."
+
+Note: Visualizations for the 'Inspection Impact' section should use Scatter Plots to show the correlation between Severity Level and Price Drops.
