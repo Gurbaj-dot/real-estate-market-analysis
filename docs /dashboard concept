@@ -1,0 +1,15 @@
+5.  docs/05_dashboard_overview.md 
+
+Purpose: Describes how the data should be visualized (e.g., in Power BI or Tableau).
+
+Dashboard Concept
+
+The SQL analysis is designed to feed into a 3-page interactive dashboard:
+
+1. Executive Overview: High-level KPIs (Total Sales, Avg Price/Sqft, Market Velocity).
+​
+2. Neighborhood Deep-Dive: A map-based view using the  Investment Potential Score  to highlight "Buy" zones.
+​
+3. Agent Scorecard: A leaderboard ranking agents by "Total Commission" vs. "Sales Speed."
+
+Note: Visualizations for the 'Inspection Impact' section should use Scatter Plots to show the correlation between Severity Level and Price Drops.
