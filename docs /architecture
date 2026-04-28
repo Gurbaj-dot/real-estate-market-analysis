@@ -1,0 +1,21 @@
+4.  docs/04_system_architecture.md 
+
+Purpose: Shows the relationship between tables and the technology stack.
+
+System Architecture
+
+Entity Relationship Diagram (ERD)
+
+- Properties (Center): Acts as the bridge between Neighborhoods and Sales.
+​
+- Sales (Fact Table): Connects Properties to Agents for performance tracking.
+​
+- Inspections (Sub-table): Linked to Properties via  property_id  for quality analysis.
+
+Tech Stack
+
+- Database: SQL Server / PostgreSQL
+​
+- Analysis Tools: SQL (CTEs, Window Functions)
+​
+- Documentation: Markdown
