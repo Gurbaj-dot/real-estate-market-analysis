@@ -1,0 +1,6 @@
+id,name,city,avg_income,school_rating,walkability_score
+1,Downtown,Metro City,85000,8.5,95
+2,Riverside,Metro City,75000,7.800000191,82
+3,Hillside,Metro City,120000,9.199999809,65
+4,Oakwood,Suburb Town,95000,8.899999619,75
+5,Lakeview,Metro City,110000,9,88
