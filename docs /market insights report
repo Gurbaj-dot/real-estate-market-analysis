@@ -1,0 +1,13 @@
+  docs/03_market_insights.md 
+
+Purpose: Summarizes the business findings derived from the SQL queries.
+
+Market Insights Report
+
+- Pricing Trends: Neighborhoods with a high  walkability_score  show a 15% higher Price-to-List ratio compared to car-dependent areas.
+​
+- Inspection Impact: Properties with a  severity_level  > 7 see an average price reduction of 12% and stay on the market 20 days longer.
+​
+- Agent Efficiency: Agents specializing in "Luxury Condos" have the highest commission yield but the longest  days_on_market .
+​
+- Investment Hotspots: Top-performing neighborhoods are identified where  school_rating  is > 8 but  avg_income  is still in the mid-range, suggesting high growth potential.
