@@ -28,18 +28,20 @@ As a data analyst, the goal is to answer critical business questions:
 🗄️ Database Schema
 
 The database  real_estate  consists of 5 core tables with the following structure:
-
-Table
-  
-|Table Name | Columns | Description |
- properties | id ,  address ,  neighborhood_id ,  property_type ,  bedrooms ,  bathrooms ,  sqft ,  list_price ,  list_date | Stores property details, specifications, and initial listing information |
- |sales |  id ,  property_id ,  agent_id ,  sale_price ,  sale_date ,  days_on_market | Tracks transaction records, including pricing and time to sell |
- |agents |  id ,  name ,  experience_years ,  specialization ,  commission_rate | Contains agent profiles, expertise, and compensation structure |
-|neighborhoods |  id ,  name ,  city ,  avg_income ,  school_rating ,  walkability_score | Provides demographic and livability metrics for each area |
- |inspections |  id ,  property_id ,  inspection_date ,  issues_found ,  severity_score | Records inspection results and quality issues identified before sale |
-
  
+TABLE -
 
+       properties - id ,  address ,  neighborhood_id ,  property_type ,  bedrooms , bathrooms ,  sqft ,  list_price ,  list_date -  Stores property details,                                                                                                                   specifications, and initial listing information 
+
+       Sales -  id ,  property_id ,  agent_id ,  sale_price, Tracks transaction records, including pricing and time to sell
+       
+       agents - id ,  name ,  experience_years ,  specialization ,  commission_rate - Contains agent profiles, expertise, and compensation structure 
+       
+       neighborhoods - id ,  name ,  city ,  avg_income ,  school_rating , walkability_score - Provides demographic and livability metrics for each area
+       
+       inspections - id ,  property_id ,  inspection_date ,  issues_found , severity_score - Records inspection results and quality issues identified before sale
+
+       
 🚀 Analysis Challenges
 
 The project is structured into 5 core analytical challenges:
@@ -83,15 +85,25 @@ Build a composite scoring system combining income levels, school quality, walkab
 📂 Repository Structure
 real-estate-sql-analysis/
 ├── queries/
+
 │   ├── 01_price_to_list_ratio.sql
+
 │   ├── 02_size_vs_price_analysis.sql
+
 │   ├── 03_agent_performance.sql
+
 │   ├── 04_inspection_impact.sql
+
 │   └── 05_investment_scoring.sql
+
 ├── schema/
+
 │   └── create_tables.sql          # Database creation script
+
 ├── reports/
+
 │   └── analysis_summary.md        # Key findings & insights
+
 └── README.md
  
 
