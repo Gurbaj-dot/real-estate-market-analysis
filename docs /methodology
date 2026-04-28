@@ -1,0 +1,17 @@
+2.  docs/02_methodology.md 
+
+Purpose: Explains the analytical steps taken to solve the challenges.
+
+Analysis Methodology
+
+1. Data Cleaning: Handled missing values in the  inspections  table by treating  NULL  as "No Issues Found."
+​
+2. KPI Calculation:
+​
+- Price-to-List Ratio: Calculated as  (sale_price / list_price) .
+​
+- Investment Score: A weighted average of  avg_income  (40%),  school_rating  (40%), and  walkability  (20%).
+​
+3. Aggregation: Data was grouped by neighborhood and property type to eliminate outliers in small sample sizes.
+​
+4. Join Strategy: Utilized  LEFT JOINS  on inspections to ensure properties without issues were still included in the baseline price analysis.
