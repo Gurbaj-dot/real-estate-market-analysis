@@ -1,0 +1,122 @@
+/*Business Scenario
+You're a data analyst at MetroRealty, a real estate brokerage operating in multiple cities. The leadership team wants to understand market trends, pricing dynamics, 
+agent performance, and property characteristics that drive successful sales.Using property listings, sales transactions, and agent data, you'll provide comprehensive
+market insights to guide investment and pricing strategies.*/
+
+--BUSINESS CHALLENGES 
+
+/*Price-to-List Ratio Analysis
+Calculate how properties sell relative to their listing price across neighborhoods.*/
+
+SELECT
+  n.name AS neighborhood,
+  n.city,
+  COUNT(s.id) AS total_sales,
+  ROUND(AVG(p.list_price), 2) AS avg_list_price,
+  ROUND(AVG(s.sale_price), 2) AS avg_sale_price,
+  ROUND(AVG(s.sale_price * 100.0 / p.list_price), 2) AS avg_price_to_list_pct,
+  ROUND(AVG(s.days_on_market), 1) AS avg_days_on_market,
+  ROUND(AVG(n.school_rating), 1) AS school_rating
+FROM sales s
+JOIN properties p ON s.property_id = p.id
+JOIN neighborhoods n ON p.neighborhood_id = n.id
+GROUP BY n.name, n.city
+ORDER BY avg_price_to_list_pct DESC;
+
+
+/* Property Size vs Price Analysis
+Analyze price per square foot trends across property types and neighborhoods.*/
+
+SELECT
+  p.property_type,
+  CASE
+    WHEN p.bedrooms <= 2 THEN 'Small (1-2br)'
+    WHEN p.bedrooms <= 4 THEN 'Medium (3-4br)'
+    ELSE 'Large (5+br)'
+  END AS size_category,
+  COUNT(s.id) AS sales_count,
+  ROUND(AVG(p.sqft), 0) AS avg_sqft,
+  ROUND(AVG(s.sale_price), 2) AS avg_sale_price,
+  ROUND(AVG(s.sale_price / p.sqft), 2) AS avg_price_per_sqft,
+  ROUND(MIN(s.sale_price / p.sqft), 2) AS min_price_per_sqft,
+  ROUND(MAX(s.sale_price / p.sqft), 2) AS max_price_per_sqft,
+  ROUND(AVG(n.walkability_score), 1) AS avg_walkability
+FROM sales s
+JOIN properties p ON s.property_id = p.id
+JOIN neighborhoods n ON p.neighborhood_id = n.id
+WHERE p.sqft > 0
+GROUP BY p.property_type, size_category
+ORDER BY avg_price_per_sqft DESC;
+
+/*Agent Performance & Commission Analysis
+Evaluate agent productivity, sales volume, and commission earnings*/
+
+SELECT
+  a.name AS agent_name,
+  a.specialization,
+  a.experience_years,
+  CASE
+    WHEN a.experience_years < 3 THEN 'Junior'
+    WHEN a.experience_years < 7 THEN 'Mid-Level'
+    ELSE 'Senior'
+  END AS experience_level,
+  COUNT(s.id) AS total_sales,
+  ROUND(SUM(s.sale_price), 2) AS total_sales_volume,
+  ROUND(SUM(s.sale_price * a.commission_rate / 100), 2) AS total_commission_earned,
+  ROUND(AVG(s.sale_price), 2) AS avg_sale_price,
+  ROUND(AVG(s.days_on_market), 1) AS avg_days_to_close,
+  ROUND(SUM(s.sale_price) / COUNT(s.id), 2) AS revenue_per_sale
+FROM agents a
+LEFT JOIN sales s ON a.id = s.agent_id
+GROUP BY a.name, a.specialization, a.experience_years
+HAVING total_sales > 0
+ORDER BY total_sales_volume DESC
+LIMIT 20;
+
+/*Inspection Impact on Sale Price
+Analyze how property inspections and issues affect final sale prices*/
+
+SELECT
+  CASE
+    WHEN i.severity_level IS NULL THEN 'No Inspection'
+    ELSE i.severity_level
+  END AS inspection_category,
+  COUNT(DISTINCT s.id) AS property_count,
+  ROUND(AVG(p.list_price), 2) AS avg_list_price,
+  ROUND(AVG(s.sale_price), 2) AS avg_sale_price,
+  ROUND(AVG((p.list_price - s.sale_price) * 100.0 / p.list_price), 2) AS avg_discount_pct,
+  ROUND(AVG(s.days_on_market), 1) AS avg_days_on_market,
+  ROUND(AVG(CASE WHEN i.issues_found IS NOT NULL THEN i.issues_found ELSE 0 END), 1) AS avg_issues_found
+FROM sales s
+JOIN properties p ON s.property_id = p.id
+LEFT JOIN inspections i ON p.id = i.property_id
+GROUP BY inspection_category
+ORDER BY avg_discount_pct DESC;
+
+
+/*Neighborhood Investment Score
+Create a comprehensive scoring system for neighborhood investment potential*/
+
+SELECT
+  n.name AS neighborhood,
+  n.city,
+  n.school_rating,
+  n.avg_income,
+  n.walkability_score,
+  COUNT(s.id) AS recent_sales,
+  ROUND(AVG(s.sale_price * 100.0 / p.list_price), 2) AS avg_appreciation_pct,
+  ROUND(AVG(s.days_on_market), 1) AS avg_market_time,
+  ROUND(
+    (n.school_rating * 15 +
+     n.walkability_score * 10 +
+     AVG(s.sale_price * 100.0 / p.list_price) * 20 +
+     (100 - AVG(s.days_on_market)) * 5) / 50,
+    2
+  ) AS investment_score
+FROM neighborhoods n
+LEFT JOIN properties p ON n.id = p.neighborhood_id
+LEFT JOIN sales s ON p.id = s.property_id
+GROUP BY n.name, n.city, n.school_rating, n.avg_income, n.walkability_score
+HAVING recent_sales > 0
+ORDER BY investment_score DESC
+LIMIT 10;
